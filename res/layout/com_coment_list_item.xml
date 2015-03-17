@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp" >
+
+        <ImageView
+            android:id="@+id/comment_item_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/comment_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/comment_item_icon"
+            android:padding="5dp"
+            android:text="我是跟帖明星"
+            android:textSize="12sp"
+            android:textColor="@color/blue_text" />
+     <!--    
+        <ImageView
+            android:id="@+id/comment_item_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/comment_item_like_num"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:src="@drawable/comment_default" />
+
+        <TextView
+            android:id="@+id/comment_item_like_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="0"
+            android:textColor="@color/lightgray"
+            android:textSize="12sp"/> -->
+        
+        <TextView
+            android:id="@+id/comment_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="2分钟前"
+            android:textColor="@color/lightgray"
+            android:textSize="12sp"/>
+        
+    </RelativeLayout>
+     <TextView
+            android:id="@+id/comment_item_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="支持！"
+            android:textColor="@color/lightgray"
+            android:textSize="16sp"/>
+
+</LinearLayout>

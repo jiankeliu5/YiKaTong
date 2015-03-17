@@ -1,0 +1,64 @@
+<!--
+  Copyright 2011 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<resources>
+
+    <dimen name="slidingmenu_offset">60dp</dimen>
+    <dimen name="list_padding">10dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+
+    <integer name="num_cols">1</integer>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="news_item_padding_top">8dp</dimen>
+    <dimen name="list_foot_view_height">8dp</dimen>
+    <dimen name="web_view_title_height">48dp</dimen>
+
+    <!--
+    Default screen margins, per the Android Design guidelines.
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    -->
+
+    <dimen name="image_bg_size">150dp</dimen>
+    <dimen name="image_thumbnail_size">125dp</dimen>
+    <dimen name="image_thumbnail_spacing">5dp</dimen>
+    <dimen name="image_detail_pager_margin">80dp</dimen>
+    <dimen name="gridview_adjust">30dp</dimen>
+    <dimen name="padding_window">16dp</dimen>
+    <dimen name="padding_default">8dp</dimen>
+    <dimen name="tag_tip">22sp</dimen>
+    <dimen name="tag_action">18sp</dimen>
+    <dimen name="tag_h1">20sp</dimen>
+    <dimen name="tag_h2">18sp</dimen>
+    <dimen name="tag_h3">14sp</dimen>
+    <dimen name="tag_text">18sp</dimen>
+    <dimen name="tag_item">18sp</dimen>
+    <dimen name="tag_lab">18sp</dimen>
+    <dimen name="tag_parag">4dp</dimen>
+    <dimen name="tag_spliter">1.5dp</dimen>
+    <dimen name="font_content">16sp</dimen>
+    <dimen name="font_title">18sp</dimen>
+    <dimen name="layout_5dp">5dp</dimen>
+    <dimen name="layout_10dp">10dp</dimen>
+    <dimen name="layout_3dp">3dp</dimen>
+    <dimen name="title_height">50dp</dimen>
+    <dimen name="hint">14dp</dimen>
+    <dimen name="pop_update">280dp</dimen>
+    <dimen name="font_20sp">20sp</dimen>
+
+</resources>

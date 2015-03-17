@@ -1,0 +1,172 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+        <item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="toolButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="textBoard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:fillViewport">true</item>
+        <item name="android:scrollbars">none</item>
+    </style>
+
+    <style name="textArea">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/tag_text</item>
+        <item name="android:padding">@dimen/padding_default</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:scrollHorizontally">false</item>
+        <item name="android:textColor">@color/tag_text</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:clickable">false</item>
+        <item name="android:longClickable">false</item>
+        <item name="android:linksClickable">true</item>
+        <item name="android:lineSpacingExtra">1.5dp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="progressBar">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!-- 重写系统弹出Dialog -->
+    <style name="ThemeDialogCustom">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowBackground">@color/transparent_color</item>
+        <!-- <item name="android:background">@drawable/corner_bg</item> -->
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+    <!-- 重写系统弹出ProgressDialog -->
+    <style name="new_circle_progress" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowBackground">@color/transparent_color</item>
+        <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 模糊 -->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+
+        <!-- name是我们在使用时要用到的资源的标志，parent是指当前的样式所继承的父类样式 -->
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- 隐藏标题栏 -->
+        <item name="android:background">@color/transparent</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <!-- 这儿也很重要啊，我这儿用了一张透明的.9.png的图，当然用#00000000也是可以的，否则的话这儿出来后有一个黑色的背景 -->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="input_style">
+        <item name="android:paddingLeft">60dp</item>
+        <item name="android:background">@drawable/input_bg</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:inputType">text</item>
+    </style>
+
+    <style name="input_password_style">
+        <item name="android:paddingLeft">120dp</item>
+        <item name="android:background">@drawable/input_bg</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:inputType">text</item>
+    </style>
+
+    <style name="more_fragment_item_bg">
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/title_buttton_bg</item>
+        <item name="android:paddingBottom">@dimen/layout_5dp</item>
+        <item name="android:paddingTop">@dimen/layout_5dp</item>
+        <item name="android:paddingLeft">@dimen/layout_10dp</item>
+        <item name="android:paddingRight">@dimen/layout_10dp</item>
+    </style>
+
+    <style name="classname_15_color9">
+        <item name="android:textSize">15.0dip</item>
+        <item name="android:textColor">@color/wcc_color_9</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">15.0dip</item>
+        <item name="android:paddingTop">10.0dip</item>
+        <item name="android:paddingRight">15.0dip</item>
+        <item name="android:paddingBottom">10.0dip</item>
+    </style>
+
+    <style name="padding_l15_r15_t10_b10">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">15.0dip</item>
+        <item name="android:paddingTop">10.0dip</item>
+        <item name="android:paddingRight">15.0dip</item>
+        <item name="android:paddingBottom">10.0dip</item>
+    </style>
+
+    <style name="edittext_15_c2toc9">
+        <item name="android:textSize">15.0dip</item>
+        <item name="android:textColor">@color/wcc_color_9</item>
+        <item name="android:textColorHint">@color/wcc_color_2</item>
+        <item name="android:gravity">top</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingLeft">15.0dip</item>
+        <item name="android:paddingTop">10.0dip</item>
+        <item name="android:paddingRight">15.0dip</item>
+        <item name="android:paddingBottom">10.0dip</item>
+    </style>
+
+      <style name="title_bar_button">
+        <item name="android:paddingLeft">@dimen/layout_10dp</item>
+        <item name="android:paddingRight">@dimen/layout_10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/title_buttton_bg</item>
+    </style>
+    
+</resources>

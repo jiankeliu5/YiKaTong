@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:padding="1dp" >
+
+    <ImageView
+        android:id="@+id/com_pic"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/com_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/com_pic"
+        android:layout_alignParentBottom="true"
+        android:text="三星超级相机最新上市"
+        android:padding="2dp"
+        android:textColor="@color/white"
+        android:background="@color/red" />
+
+</RelativeLayout>

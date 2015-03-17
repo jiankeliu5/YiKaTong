@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/pop_update"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/layout_10dp"
+    android:paddingRight="@dimen/layout_10dp"
+    android:paddingTop="@dimen/layout_10dp"
+    android:paddingBottom="@dimen/layout_10dp"
+    android:background="@drawable/pop_title_shape" >
+
+    <TextView
+        android:id="@+id/pop_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="@string/more_update"
+        android:textSize="@dimen/font_title" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:onClick="cancel"
+        android:src="@drawable/icon_img_cancel" />
+
+</RelativeLayout>

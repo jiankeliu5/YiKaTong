@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"   
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/com_main_fragment" >	     
+	     
+	      <com.seedsoft.ykt.widget.XListView
+		        android:id="@+id/content_list_lv"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:cacheColorHint="#00000000"
+		        android:headerDividersEnabled="true"
+		        android:footerDividersEnabled="true"
+		        android:dividerHeight="0dip"
+		        android:paddingLeft="5dp"
+		        android:paddingRight="5dp"
+		        android:paddingBottom="5dp"
+		        android:scrollbars="none" />
+	      
+	      <com.seedsoft.ykt.widget.ComposerLayout 
+	          android:id="@+id/pathBtn"
+	          android:layout_width="20dp"
+	          android:layout_height="wrap_content"
+	          android:visibility="gone"	          
+		      android:layout_alignParentRight="true"
+		      android:layout_centerVertical="true" 
+	          />
+	      
+</RelativeLayout>

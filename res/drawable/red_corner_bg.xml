@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+   
+    <item android:state_checkable="true"><shape>
+            <gradient android:angle="270.0" android:endColor="@color/theme_red_pressed" android:startColor="@color/theme_red_pressed" />
+
+            <corners android:radius="3.0dip" />
+        </shape></item>
+    <item android:state_pressed="true"><shape>
+            <gradient android:angle="270.0" android:endColor="@color/theme_red_pressed" android:startColor="@color/theme_red_pressed" />
+
+            <corners android:radius="3.0dip" />
+        </shape></item>
+    <item android:state_selected="true"><shape>
+            <gradient android:angle="270.0" android:endColor="@color/theme_red_pressed" android:startColor="@color/theme_red_pressed" />
+
+            <corners android:radius="3.0dip" />
+        </shape></item>
+    <item android:state_activated="true"><shape>
+            <gradient android:angle="270.0" android:endColor="@color/theme_red_pressed" android:startColor="@color/theme_red_pressed" />
+
+            <corners android:radius="3.0dip" />
+        </shape></item>
+    <item android:state_focused="true"><shape>
+            <gradient android:angle="270.0" android:endColor="@color/theme_red_pressed" android:startColor="@color/theme_red_pressed" />
+
+            <corners android:radius="3.0dip" />
+        </shape></item>
+
+         <item ><shape>
+            <gradient android:angle="270.0" android:endColor="@color/theme_red_normal" android:startColor="@color/theme_red_normal" />
+
+            <corners android:radius="3.0dip" />
+        </shape></item>
+
+</selector>

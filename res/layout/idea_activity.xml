@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg_activity"
+    android:orientation="vertical" >
+
+    <include layout="@layout/top_bar" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                style="@style/classname_15_color9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/idea_activity_hint" />
+
+            <include layout="@layout/line" />
+
+            <LinearLayout
+                style="@style/padding_l15_r15_t10_b10"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/idea_activity_contact"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_title" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/email"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:dropDownVerticalOffset="10.0dp"
+                    android:hint="@string/idea_activity_num"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/wcc_color_9"
+                    android:textSize="@dimen/font_title" />
+            </LinearLayout>
+
+            <include layout="@layout/line" />
+
+            <TextView
+                style="@style/classname_15_color9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/idea_activity_feedback" />
+
+            <include layout="@layout/line" />
+
+            <EditText
+                android:id="@+id/edit"
+                style="@style/edittext_15_c2toc9"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:hint="@string/idea_text" />
+
+            <include layout="@layout/line" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_back"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="send"
+                android:padding="8dp"
+                android:textSize="@dimen/font_title"
+                android:text="@string/idea_activty_send" />
+
+            <com.seedsoft.ykt.widget.LoopProgressBar
+                android:id="@+id/send_progress_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="3dp"
+                android:layout_marginLeft="@dimen/layout_10dp"
+                android:layout_marginRight="@dimen/layout_10dp"
+                android:layout_marginTop="@dimen/layout_5dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

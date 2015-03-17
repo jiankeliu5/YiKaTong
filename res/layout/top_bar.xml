@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/title_height"
+    android:background="@drawable/db_bj" >
+
+    <TextView
+        style="@style/title_bar_button"
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:clickable="true"
+        android:onClick="login"
+        android:gravity="center"
+        android:text="@string/title_login"
+         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="@dimen/font_content"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/top_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/title"
+        android:textSize="@dimen/font_title" />
+
+    <TextView
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/title_buttton_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="register"
+        android:paddingLeft="@dimen/layout_10dp"
+        android:paddingRight="@dimen/layout_10dp"
+        android:text="@string/title_register"
+        android:textSize="@dimen/font_content"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">长安一卡通</string>
+    <string name="soft_update_versionName">长安一卡通</string>
+    <string name="soft_update_versionCode">版本1.0.1</string>
+    <string name="pull_to_refresh_pull_label">下拉刷新</string>
+    <string name="pull_to_refresh_release_label">松开后刷新</string>
+    <string name="pull_to_refresh_refreshing_label">刷新...</string>
+    <string name="pull_to_refresh_tap_label">Tap to refresh...</string>
+    <string name="pull_to_refresh_footer_label">松开加载更多...</string>
+    <string name="pull_to_refresh_footer_pull_label">上拉更多</string>
+    <string name="pull_to_refresh_footer_refreshing_label">加载中...</string>
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载...</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+    <string name="soft_update_no">此版本是最新版本</string>
+    <string name="soft_update_title">更新提示：</string>
+    <string name="soft_update_info">有新版本，是否现在更新？</string>
+    <string name="soft_update_updatebtn">确定</string>
+    <string name="soft_update_later">稍后更新</string>
+    <string name="soft_updating_info">下载更新安装包...</string>
+    <string name="soft_updating">正在下载...</string>
+    <string name="soft_update_cancel">取消</string>
+    <string name="soft_update_apk_name">长安一卡通.apk</string>
+    <string name="soft_download_title">下载提示：</string>
+    <string name="soft_download_info">您未安装此软件，现在安装吗？</string>
+    <string name="init_tip">初始化...</string>
+    <string name="clear_cache_menu">清除图片缓存</string>
+    <string name="clear_cache_complete_toast">已清理</string>
+    <string name="imageview_description">缩略图</string>
+    <string name="no_network_connection_toast">网络断开</string>
+    <string name="no_network_connection_dialog_title">断网提示：</string>
+    <string name="no_network_connection_dialog_info">网络断开，是否查看网络设置？</string>
+    <string name="nearBy_sDrawer_keyWord">关键字</string>
+    <string name="nearBy_sDrawer_canyin"> 餐饮美食 </string>
+    <string name="nearBy_sDrawer_canyin1"> 中餐 </string>
+    <string name="nearBy_sDrawer_canyin2"> 小吃快餐 </string>
+    <string name="nearBy_sDrawer_canyin3"> 火锅 </string>
+    <string name="nearBy_sDrawer_canyin5"> 西餐 </string>
+    <string name="nearBy_sDrawer_canyin4"> 外卖 </string>
+    <string name="nearBy_sDrawer_canyin6"> 肯德基 </string>
+    <string name="nearBy_sDrawer_xiuxian"> 休闲娱乐 </string>
+    <string name="nearBy_sDrawer_xiuxian1"> 电影院 </string>
+    <string name="nearBy_sDrawer_xiuxian2"> K T V </string>
+    <string name="nearBy_sDrawer_xiuxian3"> 网吧 </string>
+    <string name="nearBy_sDrawer_xiuxian4"> 酒吧 </string>
+    <string name="nearBy_sDrawer_xiuxian5"> 咖啡厅 </string>
+    <string name="nearBy_sDrawer_xiuxian6"> 景点 </string>
+    <string name="nearBy_sDrawer_xiuxian7"> 丽人 </string>
+    <string name="nearBy_sDrawer_xiuxian8"> 洗浴 </string>
+    <string name="nearBy_sDrawer_xiuxian9"> 足疗 </string>
+    <string name="nearBy_sDrawer_jiaotong"> 交通工具 </string>
+    <string name="nearBy_sDrawer_jiaotong1"> 公交站 </string>
+    <string name="nearBy_sDrawer_jiaotong2"> 加油站 </string>
+    <string name="nearBy_sDrawer_jiaotong3"> 停车场 </string>
+    <string name="nearBy_sDrawer_jiaotong4"> 火车站 </string>
+    <string name="nearBy_sDrawer_jiaotong5"> 长途汽车站 </string>
+    <string name="nearBy_sDrawer_jiaotong6"> 火车票代售点 </string>
+    <string name="nearBy_sDrawer_zhusu"> 住宿酒店 </string>
+    <string name="nearBy_sDrawer_zhusu1"> 快捷酒店 </string>
+    <string name="nearBy_sDrawer_zhusu2"> 星级酒店 </string>
+    <string name="nearBy_sDrawer_zhusu3"> 度假村 </string>
+    <string name="nearBy_sDrawer_zhusu4"> 青年旅社 </string>
+    <string name="nearBy_sDrawer_zhusu5"> 旅馆 </string>
+    <string name="nearBy_sDrawer_zhusu6"> 招待所 </string>
+    <string name="nearBy_sDrawer_fuwu"> 生活服务 </string>
+    <string name="nearBy_sDrawer_fuwu1"> 超市 </string>
+    <string name="nearBy_sDrawer_fuwu2"> 药店 </string>
+    <string name="nearBy_sDrawer_fuwu3"> 医院 </string>
+    <string name="nearBy_sDrawer_fuwu4"> ATM </string>
+    <string name="nearBy_sDrawer_fuwu5"> 银行 </string>
+    <string name="nearBy_sDrawer_fuwu6"> 厕所 </string>
+    <string name="nearBy_sDrawer_tuijian"> 特色推荐 </string>
+    <string name="nearBy_sDrawer_tuijian1"> 著名景点 </string>
+    <string name="nearBy_sDrawer_tuijian2"> 特色美食 </string>
+    <string name="nearBy_sDrawer_tuijian3"> 特产购物 </string>
+    <string name="nearBy_sDrawer_tuijian4"> 推荐宾馆 </string>
+    <string name="nearBy_sDrawer_tuijian5"> 机场车站 </string>
+    <string name="tag_hint">Tag为大小写字母，数字，下划线,中文， 多个用以逗号分隔</string>
+    <string name="alias_hint">Alias为大小写字母，数字，下划线</string>
+    <string name="style_hint">style为数字</string>
+    <string name="error_style_empty">style不能为空</string>
+    <string name="error_alias_empty">alias不能为空</string>
+    <string name="error_tag_empty">tag不能为空</string>
+    <string name="error_tag_gs_empty">格式不对</string>
+    <string name="error_network">网络连接异常,初始化失败 请检查网络！</string>
+    <string name="logining">程序在后台执行, 请查看日志！</string>
+    <string name="setting_su">设置成功</string>
+    <string name="font_oem1">fonts/oem1.ttf</string>
+    <string name="font_oem2">fonts/oem2.ttf</string>
+    <string name="font_oem3">fonts/oem3.ttf</string>
+    <string name="spec_prop_id">应用</string>
+    <string name="spec_prop_serial">卡号：\u0020</string>
+    <string name="spec_prop_param">参数：\u0020</string>
+    <string name="spec_prop_version">版本：\u0020</string>
+    <string name="spec_prop_date">生效：\u0020</string>
+    <string name="spec_prop_currency">币种：\u0020</string>
+    <string name="spec_prop_count">交易：\u0020</string>
+    <string name="spec_prop_balance">余额：\u0020</string>
+    <string name="spec_prop_ecash">电子现金：\u0020</string>
+    <string name="spec_prop_tlimit">单笔上限：\u0020</string>
+    <string name="spec_prop_dlimit">圈存上限：\u0020</string>
+    <string name="spec_prop_translog">交易记录：</string>
+    <string name="spec_prop_access">访问受限</string>
+    <string name="spec_prop_exception">错误：</string>
+    <string name="spec_cur_unknown"></string>
+    <string name="spec_cur_usd">美元</string>
+    <string name="spec_cur_cny">元</string>
+    <string name="spec_cur_hkd">港币</string>
+    <string name="spec_app_unknown">未知卡</string>
+    <string name="spec_app_shenzhentong">深圳通</string>
+    <string name="spec_app_quickpass">银联闪付卡</string>
+    <string name="spec_app_octopus_hk">香港八达通</string>
+    <string name="spec_app_changantong">长安通</string>
+    <string name="spec_app_dongguantong">东莞通</string>
+    <string name="spec_app_wuhantong">武汉城市一卡通</string>
+    <string name="spec_app_beijing">北京市政交通卡</string>
+    <string name="spec_app_shanghai">上海公交卡</string>
+    <string name="spec_app_debit">借记卡</string>
+    <string name="spec_app_credit">信用卡</string>
+    <string name="spec_app_qcredit">准贷记卡</string>
+    <string name="info_nfc_notsupport">
+<![CDATA[
+    <t_tip>没有找到NFC硬件，程序无法工作。</t_tip>
+    ]]>
+    </string>
+    <string name="info_nfc_disabled">
+<![CDATA[   
+    <t_tip>NFC已关闭，需先打开。<br /><br />可在<t_action_nfc><b>系统设置-无线和网络</b></t_action_nfc>里开启。</t_tip>
+    ]]>
+    </string>
+    <string name="info_nfc_nocard">
+<![CDATA[
+    <t_tip>没有卡片信息，请将卡片靠近手机后盖上的NFC天线进行读卡。</t_tip>    
+    ]]>
+    </string>
+    <string name="info_nfc_error">
+<![CDATA[
+    <t_tip>
+    <b>读卡过程中发生错误。</b><br />
+    读卡时请将卡片靠近手机后盖上的NFC天线并持续几秒种，以便程序读取信息。多次失败时可以尝试关闭NFC然后重新打开，请勿过早移开卡片。<br />
+	</t_tip>
+    ]]>
+    </string>
+    <string name="info_nfc_unknown">
+<![CDATA[
+    <t_tip><b>未知卡片。</b> <br />可在<t_action_help><b>这里</b></t_action_help>查看支持的卡片类型。</t_tip>
+    ]]>
+    </string>
+    <string name="info_main_copied">卡片信息已经拷贝到剪贴板</string>
+    <string name="info_main_about">
+<![CDATA[
+	<div>
+	<t_head1><app /></t_head1> <version />
+	<br /><t_splitter><br />
+	<br />此功能使用手机NFC读取非接触式IC卡中的信息。<br />
+	<br />可以读取IC卡中没有设置读取限制的余额、交易记录。<br />
+	<br />目前可以读出的卡片有：西安长安通、深圳通（新版）、上海公交卡、香港八达通、北京市政一卡通（新版）、东莞通、武汉城市一卡通和银联闪付卡。<br />
+	<br />
+	</div>
+	]]>
+    </string>
+    <string name="login">登&#160;&#160;录</string>
+    <string name="name">账&#160;&#160;号：</string>
+    <string name="password">密&#160;&#160;码：</string>
+    <string name="password2">再次输入密码：</string>
+    <string name="title_login">登录</string>
+    <string name="title_register">注册</string>
+    <string name="register">注&#160;&#160;册</string>
+    <string name="email">邮&#160;&#160;箱：</string>
+    <string name="record_password">记住密码</string>
+    <string name="title">西安一卡通</string>
+    <string name="mine">我的</string>
+    <string name="more">更多</string>
+    <string name="more_message">消息推送</string>
+    <string name="more_message_note">接收最新消息</string>
+    <string name="more_idea">意见反馈</string>
+    <string name="more_idea_note">提出对这款软件的意见及建议</string>
+    <string name="more_empty">清除缓存</string>
+    <string name="more_empty_note">删除一些本地数据</string>
+    <string name="idea_activity_hint">请填写联系方式，便于我们联系您</string>
+    <string name="idea_activity_contact">联系方式：</string>
+    <string name="idea_activity_num">手机号/QQ号/邮箱</string>
+    <string name="idea_activity_feedback">请输入意见</string>
+    <string name="idea_text">请填写您的宝贵意见,我们期待您的意见和建议.</string>
+    <string name="idea_activty_send">发&#160;&#160;送</string>
+    <string name="more_regarding">关于</string>
+    <string name="more_update">版本更新</string>
+    <string name="num">100%</string>
+    <string name="cancel">取消更新</string>
+    <string name="update">后台更新</string>
+    <string name="yet_version">已经是最新版本</string>
+    <string name="version">当前版本：1.33\n最新版本：1.34</string>
+    <string name="check">正在检查更新…</string>
+    <string name="next">下次更新</string>
+    <string name="immediately">马上更新</string>
+    <string name="notification">正在下载</string>
+    <string name="notification_text">正在下载…</string>
+    <string name="ip">http://192.168.1.14:8888/</string>
+    <string name="io_exception">网络访问出错</string>
+    <string name="failure">网络请求失败</string>
+    <string name="find">找回密码</string>
+    <string name="submit">提&#160;&#160;交</string>
+    <string name="win">密码修改成功！</string>
+    <string name="defeat">密码修改失败！</string>
+
+</resources>

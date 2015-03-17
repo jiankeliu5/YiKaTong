@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	         android:id="@+id/lin_iv"
+	         android:layout_width="wrap_content"
+	         android:layout_height="180dp"
+	         android:orientation="vertical" >
+
+		    <ImageView
+		        android:id="@+id/scroll_iv"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:scaleType="centerCrop" />
+
+	         <TextView
+	             android:id="@+id/index_tv"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_above="@+id/index_title_tv"
+	             android:text="1/6"
+	             android:textSize="16sp"
+	             android:padding="3dp"
+	             android:textColor="@android:color/white"
+	             android:layout_marginTop="125dp"
+	             android:background="#E3170D"
+	             />
+
+	         <TextView
+	             android:id="@+id/index_title_tv"
+	             android:layout_width="match_parent"
+	             android:layout_height="wrap_content"
+	             android:layout_alignParentLeft="true"
+	             android:layout_alignParentBottom="true"
+	             android:background="#323232"
+	             android:padding="3dp"
+	             android:text="省纪委对我校落实廉政风险防控管理"
+	             android:textColor="@android:color/white"
+	             android:textSize="16sp" />
+
+</RelativeLayout>
+

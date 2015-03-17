@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pop_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/pop_title" />
+
+    <LinearLayout
+        android:layout_width="@dimen/pop_update"
+        android:layout_height="wrap_content"
+        android:background="@drawable/down_arc_bg"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:paddingLeft="@dimen/layout_10dp"
+        android:paddingRight="@dimen/layout_10dp"
+        android:paddingTop="15dp" >
+
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineSpacingMultiplier="1.2"
+            android:visibility="gone"
+            android:text="@string/check" />
+
+        <include
+            android:visibility="gone"
+            android:id="@+id/progress_bar"
+            layout="@layout/progress_bar" />
+
+        <com.seedsoft.ykt.widget.LoopProgressBar
+            android:id="@+id/loop_progress_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="3dp"
+             android:visibility="gone"
+            android:layout_marginTop="@dimen/layout_10dp"
+            />
+
+        <RelativeLayout
+            android:id="@+id/relatice_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="15dp" >
+
+            <TextView
+                android:id="@+id/background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/button_back"
+                android:padding="@dimen/layout_3dp"
+                android:text="@string/update"
+                android:textColor="@color/white"
+                android:clickable="true"
+                android:onClick="updateVersion"
+                android:textSize="@dimen/font_content" />
+
+            <TextView
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="@dimen/layout_10dp"
+                android:layout_marginRight="@dimen/layout_10dp"
+                android:layout_toLeftOf="@+id/background"
+                android:layout_toStartOf="@+id/background"
+                android:background="@drawable/button_back"
+                android:padding="@dimen/layout_3dp"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:clickable="true"
+                android:onClick="cancelUpdate"
+                android:textSize="@dimen/font_content" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
