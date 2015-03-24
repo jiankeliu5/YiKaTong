@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.jpush.android.api.JPushInterface;
 
 import com.seedsoft.ykt.activity.R;
 import com.seedsoft.ykt.util.Util;
@@ -31,7 +32,7 @@ public class MoreFragment extends Fragment {
 
 	private LoopProgressBar bar;
 
-	public boolean isMessage = true;
+	public boolean isMessage;
 
 	public SharedPreferences configuration;
 
@@ -84,11 +85,18 @@ public class MoreFragment extends Fragment {
 		title.setText(titleText);
 		message = (RelativeLayout) v.findViewById(R.id.message);
 		empty = (RelativeLayout) v.findViewById(R.id.empty);
-		setMessage();
+		messageIv.setImageResource(isMessage ? R.drawable.on : R.drawable.off);
 		message.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setMessage();
+				isMessage = configuration.getBoolean("isMessage", true);
+				messageIv.setImageResource(isMessage ? R.drawable.on : R.drawable.off);
+				if(!isMessage){
+					JPushInterface.stopPush(getActivity().getApplicationContext());
+				}else{
+					JPushInterface.init(getActivity().getApplicationContext());
+				}
+				configuration.edit().putBoolean("isMessage", !isMessage).commit();
 			}
 		});
 		empty.setOnClickListener(new OnClickListener() {
@@ -115,11 +123,7 @@ public class MoreFragment extends Fragment {
 		});
 	}
 
-	public void setMessage() {
-		isMessage = configuration.getBoolean("isMessage", true);
-		messageIv.setImageResource(isMessage ? R.drawable.off : R.drawable.on);
-		configuration.edit().putBoolean("isMessage", !isMessage).commit();
-	}
+	
 
 	public void setBar(int color) {
 		bar.setColor(color);

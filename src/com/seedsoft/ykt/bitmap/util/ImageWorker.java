@@ -103,7 +103,7 @@ public abstract class ImageWorker {
             task.executeOnExecutor(AsyncTask.DUAL_THREAD_EXECUTOR, data);
         }
     }
-    
+   
 
     /**
      * Set placeholder bitmap that shows when the the background thread is running.

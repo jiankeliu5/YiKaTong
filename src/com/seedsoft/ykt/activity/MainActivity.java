@@ -24,9 +24,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -36,19 +33,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.PopupWindow.OnDismissListener;
 
 import com.seedsoft.ykt.adpter.BaseFragmentAdapter;
-import com.seedsoft.ykt.bean.ActBean;
-import com.seedsoft.ykt.bean.AdBean;
-import com.seedsoft.ykt.bean.FatherBean;
-import com.seedsoft.ykt.bean.NewsBean;
 import com.seedsoft.ykt.bean.RootBean;
-import com.seedsoft.ykt.fragment.ComMainFragment;
-import com.seedsoft.ykt.fragment.WebviewFragment;
+import com.seedsoft.ykt.util.BaseApplication;
 import com.seedsoft.ykt.util.Constants;
 import com.seedsoft.ykt.widget.BottomTabIndicator;
 import com.seedsoft.ykt.widget.LoopProgressBar;
@@ -56,24 +48,9 @@ import com.seedsoft.ykt.widget.PageIndicator;
 
 public class MainActivity extends BaseActivity {
 
-	private RootBean rootBean;
-	private List<ComMainFragment> comMainFragments = null;
-	private int curPos = 0;// 当前的栏目序号
-	private boolean isExit = true;// 是否退出标志，用于9宫格模式，点击事件后的退回操作
-	private ArrayList<FatherBean> lsmpb;
-	private String showType = "normal";// 展示模式grid或normal
-	private boolean changeFlag;
-
-	// protected ActionBar actionBar;
-	TextView tv;
 	private ViewPager pager;
 	private PageIndicator indicator;
 	private BaseFragmentAdapter fragmentAdapter;
-	protected static final String[] CONTENT = new String[] { "一卡通", "商户", "我的",
-			"更多" };
-	protected static final int[] ICONS = new int[] {
-			R.drawable.perm_group_card, R.drawable.perm_group_sh,
-			R.drawable.perm_group_yh, R.drawable.perm_group_gd };
 
 	private View contentView;
 
@@ -99,188 +76,28 @@ public class MainActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
-		// actionBar = getSupportActionBar();
-		// actionBar.setTitle("");
-		// View view = getLayoutInflater().inflate(R.layout.top_bar, null);
-		// actionBar.setDisplayShowCustomEnabled(true);
-		// actionBar.setCustomView(view);
-		// tv = (TextView) view.findViewById(R.id.top_title);
-		// tv.setText(CONTENT[0]);
-		// actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.db_bj));
-
-		// if(savedInstanceState != null){
-		// rootBean = (RootBean) savedInstanceState.get("rootBean");
-		// }else
-		// if(getIntent().getSerializableExtra("ROOTBEAN_ID") != null){
-		// curPos = getIntent().getIntExtra("ROOTBEAN_ID",0);
-		// rootBean =
-		// ((BaseApplication)getApplication()).getRootBeans().get(curPos);
-		// }else{
-		// rootBean =
-		// ((BaseApplication)getApplication()).getRootBeans().get(curPos);
-		// }
-		//
-		// //初始化数据源
-		// lsmpb = loadGridData(rootBean);
-		// comMainFragments = loadNormalData(rootBean);
-		// //此处根据标示，选择展示模式
-		// showType = rootBean.getShowType();
-		// changeFlag = rootBean.isChanged();
-		//
-		//
-		//
 		contentView = getLayoutInflater().inflate(R.layout.main_activity, null);
 		setContentView(contentView);
 		configuration = getSharedPreferences(Constants.SP_SAVE_NAME,
 				Context.MODE_PRIVATE);
 		ip = getResources().getString(R.string.ip);
-		// lbs();
 		pager = (ViewPager) findViewById(R.id.pager);
 		fragmentManager = getSupportFragmentManager();
-		fragmentAdapter = new BaseFragmentAdapter(fragmentManager, CONTENT,
-				ICONS, configuration);
+		fragmentAdapter = new BaseFragmentAdapter(fragmentManager, getRootBeans(), configuration);
 		pager.setAdapter(fragmentAdapter);
 		indicator = (BottomTabIndicator) findViewById(R.id.indicator);
 		indicator.setViewPager(pager);
 	}
 
-	/**
-	 * 初始化主页数据
-	 * */
-	/*
-	 * public void init(){
-	 * 
-	 * }
-	 */
+	public ArrayList<RootBean> getRootBeans(){
+		return ((BaseApplication)getApplication()).getRootBeans();
+	}
+
 	@Override
 	public void onBackPressed() {
 		allExit(this);
-	}
-
-	/**
-	 * 初始化横向展示数据源，加载fragment集合
-	 * */
-	private List<ComMainFragment> loadNormalData(RootBean rootBean) {
-		// TODO Auto-generated method stub
-		List<ComMainFragment> comMainFragments = new ArrayList<ComMainFragment>();
-		ComMainFragment fragment = null;
-		for (int i = 0; i < rootBean.getFatherBeans().size(); i++) {
-
-			FatherBean fb = rootBean.getFatherBeans().get(i);
-			if (fb.getIsShow().equals("y"))
-				continue;
-			if (fb.getFatherModuleBeans().size() == 1
-					&& fb.getFatherModuleBeans().get(0).getType()
-							.equalsIgnoreCase("activity")) {
-				// 获取跳转activity的信息
-				ActBean act = (ActBean) fb.getFatherModuleBeans().get(0)
-						.getObjects();
-				String actName = act.getPath();
-				try {
-					Class c = Class.forName(actName);
-					fragment = (ComMainFragment) c.newInstance();
-
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} else if (fb.getFatherModuleBeans().size() == 1
-					&& fb.getFatherModuleBeans().get(0).getType()
-							.equalsIgnoreCase("html5page")) {
-				// 获取跳转html5page的信息
-				NewsBean nb = (NewsBean) fb.getFatherModuleBeans().get(0)
-						.getObjects();
-
-				// System.out.println(
-				// Constants.SERVER_URL + nb.getUrl()+"\n"+
-				// nb.getTitle()+"\n"+
-				// nb.getId()+"\n"+
-				// Constants.SERVER_URL + nb.getCommentURL()+"\n"+
-				// nb.getIsAllowComment());
-				ArrayList<AdBean> ad = nb.getAdBeans();
-				String ad_title = "";
-				String ad_image = "";
-				String ad_url = "";
-				if (ad != null && ad.size() > 0) {
-					ad_title = ad.get(0).getTitle();
-					ad_image = Constants.SERVER_URL + ad.get(0).getImage();
-					ad_url = Constants.SERVER_URL + ad.get(0).getUrl();
-				}
-				fragment = (ComMainFragment) (new WebviewFragment(
-						Constants.SERVER_URL + nb.getUrl(), nb.getTitle(),
-						nb.getId(), Constants.SERVER_URL + nb.getCommentURL(),
-						nb.getIsAllowComment(), nb.getLocation(), ad_title,
-						ad_image, ad_url));
-
-			} else {
-				fragment = new ComMainFragment(fb.getFatherModuleBeans());
-			}
-
-			fragment.setName(fb.getName());
-			comMainFragments.add(fragment);
-		}
-		return comMainFragments;
-	}
-
-	/**
-	 * 初始化九宫格展示元数据
-	 */
-	private ArrayList<FatherBean> loadGridData(RootBean rootBean) {
-		ArrayList<FatherBean> lsfb = new ArrayList<FatherBean>();
-		for (int i = 0; i < rootBean.getFatherBeans().size(); i++) {
-			FatherBean fb = rootBean.getFatherBeans().get(i);
-			if (fb.getIsShow().equals("y"))
-				continue;
-			lsfb.add(fb);
-		}
-		return lsfb;
-	}
-
-	public void lbs() {
-		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-				1000, 0, new LocationListener() {
-
-					@Override
-					public void onStatusChanged(String provider, int status,
-							Bundle extras) {
-						// TODO Auto-generated method stub
-						System.out.println("状态切换！");
-					}
-
-					@Override
-					public void onProviderEnabled(String provider) {
-						// TODO Auto-generated method stub
-						System.out.println("GPS is open!");
-					}
-
-					@Override
-					public void onProviderDisabled(String provider) {
-						// TODO Auto-generated method stub
-						System.out.println("GPS is closed!");
-					}
-
-					@Override
-					public void onLocationChanged(Location location) {
-						// TODO Auto-generated method stub
-						System.out.println("位置改变！");
-						System.out.println("经度：" + location.getLatitude());
-						System.out.println("维度：" + location.getLongitude());
-						System.out.println("海拔：" + location.getAltitude());
-					}
-				});
-		Location location = locationManager
-				.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		location.getLatitude();
-	}
-
+	}	
+	
 	/**
 	 * 登录/注销
 	 */

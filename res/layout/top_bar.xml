@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_height"
-    android:background="@drawable/db_bj" >
+    android:background="@drawable/db_bj"   
+    android:id="@+id/top_bar_id" >
 
     <TextView
         style="@style/title_bar_button"

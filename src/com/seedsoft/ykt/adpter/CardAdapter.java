@@ -11,26 +11,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.seedsoft.ykt.activity.R;
-import com.seedsoft.ykt.bean.CardItemBean;
+import com.seedsoft.ykt.bean.FatherBean;
+import com.seedsoft.ykt.bean.RootBean;
+import com.seedsoft.ykt.bitmap.util.ImageFetcher;
+import com.seedsoft.ykt.util.Constants;
 
 public class CardAdapter extends BaseAdapter{
 
 	private Context context;
-	private ArrayList<CardItemBean> cardItemBeans;
-	public CardAdapter(Context context,ArrayList<CardItemBean> cardItemBeans){
+	private ImageFetcher mImageFetcher;;
+	private ArrayList<FatherBean> fatherBeans;
+	public CardAdapter(Context context,ArrayList<FatherBean> fatherBeans,ImageFetcher mImageFetcher){
 		this.context = context;
-		this.cardItemBeans = cardItemBeans;
+		this.fatherBeans = fatherBeans;
+		this.mImageFetcher = mImageFetcher;
 	}
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return cardItemBeans.size();
+		return fatherBeans.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return cardItemBeans.get(position);
+		return fatherBeans.get(position);
 	}
 
 	@Override
@@ -55,10 +60,9 @@ public class CardAdapter extends BaseAdapter{
 			convertView.setTag(hv);
 		}
 		hv = (HoldView) convertView.getTag();
-		CardItemBean cb = cardItemBeans.get(position);
-		hv.iv.setImageResource(cb.getResource());
-		hv.tv.setText(cb.getTitle());
-		
+		FatherBean fb = fatherBeans.get(position);
+		hv.tv.setText(fb.getName());
+		mImageFetcher.loadImage(Constants.SERVER_URL+fb.getFrontImage(), hv.iv);
 		return convertView;
 	}
 

@@ -15,6 +15,7 @@ public class RootBean implements Serializable{
 	private static final long serialVersionUID = -8824031448851925178L;
 	private String name;
 	private String frontImage;
+	private String backImage;
 	private String backColor;
 	private String showType;
 	private boolean isChanged = false;
@@ -44,6 +45,13 @@ public class RootBean implements Serializable{
 	}
 	public void setFrontImage(String frontImage) {
 		this.frontImage = frontImage;
+	}
+	
+	public String getBackImage() {
+		return backImage;
+	}
+	public void setBackImage(String backImage) {
+		this.backImage = backImage;
 	}
 	public String getBackColor() {
 		return backColor;

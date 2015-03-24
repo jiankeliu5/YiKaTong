@@ -19,6 +19,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
@@ -49,10 +51,16 @@ public class NFCMainActivity extends Activity {
 
 		pre_tv = (TextView) findViewById(R.id.login);
 		title_tv = (TextView) findViewById(R.id.top_title);
-
-		pre_tv.setCompoundDrawablesRelativeWithIntrinsicBounds(
-				R.drawable.pre_btn, 0, 0, 0);
+		Drawable drawable = getResources().getDrawable(R.drawable.pre_btn);
+		int sysVersion = Integer.parseInt(VERSION.SDK);
+		   if (sysVersion < 14) {
+		    drawable.setBounds(0, 0, 30,30);
+		    pre_tv.setCompoundDrawables(drawable,null,null, null);
+		   } else {
+		    pre_tv.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable,null, null, null);
+		   }
 		pre_tv.setVisibility(View.VISIBLE);
+		
 
 		pre_tv.setText(getIntent().getStringExtra("PRE_TITLE"));
 		title_tv.setText(getIntent().getStringExtra("CUR_TITLE"));

@@ -1,11 +1,18 @@
-
 package com.seedsoft.ykt.widget;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
+import android.os.AsyncTask;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -18,270 +25,306 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.seedsoft.ykt.activity.R;
+import com.seedsoft.ykt.util.Constants;
 
 /**
  * This widget implements the dynamic action bar tab behavior that can change
  * across different configurations or circumstances.
  */
-public class BottomTabIndicator extends HorizontalScrollView implements PageIndicator {
-    /** Title text used when no title is provided by the adapter. */
-    private static final CharSequence EMPTY_TITLE = "";
+public class BottomTabIndicator extends HorizontalScrollView implements
+		PageIndicator {
+	/** Title text used when no title is provided by the adapter. */
+	private static final CharSequence EMPTY_TITLE = "";
 
-    /**
-     * Interface for a callback when the selected tab has been reselected.
-     */
-    public interface OnTabReselectedListener {
-        /**
-         * Callback when the selected tab has been reselected.
-         *
-         * @param position Position of the current center item.
-         */
-        void onTabReselected(int position);
-    }
+	/**
+	 * Interface for a callback when the selected tab has been reselected.
+	 */
+	public interface OnTabReselectedListener {
+		/**
+		 * Callback when the selected tab has been reselected.
+		 * 
+		 * @param position
+		 *            Position of the current center item.
+		 */
+		void onTabReselected(int position);
+	}
 
-    private Runnable mTabSelector;
+	private Runnable mTabSelector;
 
-    private final OnClickListener mTabClickListener = new OnClickListener() {
-        public void onClick(View view) {
-            TabView tabView = (TabView)view;
-            final int oldSelected = mViewPager.getCurrentItem();
-            final int newSelected = tabView.getIndex();
-            mViewPager.setCurrentItem(newSelected);
-            if (oldSelected == newSelected && mTabReselectedListener != null) {
-                mTabReselectedListener.onTabReselected(newSelected);
-            }
-        }
-    };
+	private final OnClickListener mTabClickListener = new OnClickListener() {
+		public void onClick(View view) {
+			TabView tabView = (TabView) view;
+			final int oldSelected = mViewPager.getCurrentItem();
+			final int newSelected = tabView.getIndex();
+			mViewPager.setCurrentItem(newSelected);
+			if (oldSelected == newSelected && mTabReselectedListener != null) {
+				mTabReselectedListener.onTabReselected(newSelected);
+			}
+		}
+	};
 
-    private final IcsLinearLayout mTabLayout;
+	private final IcsLinearLayout mTabLayout;
 
-    private ViewPager mViewPager;
-    private ViewPager.OnPageChangeListener mListener;
+	private ViewPager mViewPager;
+	private ViewPager.OnPageChangeListener mListener;
 
-    private int mMaxTabWidth;
-    private int mSelectedTabIndex;
+	private int mMaxTabWidth;
+	private int mSelectedTabIndex;
 
-    private OnTabReselectedListener mTabReselectedListener;
+	private OnTabReselectedListener mTabReselectedListener;
 
-    public BottomTabIndicator(Context context) {
-        this(context, null);
-    }
-    public Context ctx;
-    public BottomTabIndicator(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.ctx = context;
-        setHorizontalScrollBarEnabled(false);
-        
-        mTabLayout = new IcsLinearLayout(context, R.attr.vpiTabPageIndicatorStyle);
-//        mTabLayout = new IcsLinearLayout(context, 89);
-        addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
-    }
+	public BottomTabIndicator(Context context) {
+		this(context, null);
+	}
 
-    public void setOnTabReselectedListener(OnTabReselectedListener listener) {
-        mTabReselectedListener = listener;
-    }
+	public Context ctx;
 
-    @Override
-    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        final boolean lockedExpanded = widthMode == MeasureSpec.EXACTLY;
-        setFillViewport(lockedExpanded);
+	public BottomTabIndicator(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		this.ctx = context;
+		setHorizontalScrollBarEnabled(false);
 
-        final int childCount = mTabLayout.getChildCount();
-        if (childCount > 1 && (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST)) {
-            if (childCount > 2) {
-                mMaxTabWidth = (int)(MeasureSpec.getSize(widthMeasureSpec) * 0.4f);
-            } else {
-                mMaxTabWidth = MeasureSpec.getSize(widthMeasureSpec) / 2;
-            }
-        } else {
-            mMaxTabWidth = -1;
-        }
+		mTabLayout = new IcsLinearLayout(context,
+				R.attr.vpiIconPageIndicatorStyle);
+		// mTabLayout = new IcsLinearLayout(context, 89);
+		addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT,
+				MATCH_PARENT));
+	}
 
-        final int oldWidth = getMeasuredWidth();
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final int newWidth = getMeasuredWidth();
+	public void setOnTabReselectedListener(OnTabReselectedListener listener) {
+		mTabReselectedListener = listener;
+	}
 
-        if (lockedExpanded && oldWidth != newWidth) {
-            // Recenter the tab display if we're at a new (scrollable) size.
-            setCurrentItem(mSelectedTabIndex);
-        }
-    }
+	@Override
+	public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+		final boolean lockedExpanded = widthMode == MeasureSpec.EXACTLY;
+		setFillViewport(lockedExpanded);
 
-    private void animateToTab(final int position) {
-        final View tabView = mTabLayout.getChildAt(position);
-        if (mTabSelector != null) {
-            removeCallbacks(mTabSelector);
-        }
-        mTabSelector = new Runnable() {
-            public void run() {
-                final int scrollPos = tabView.getLeft() - (getWidth() - tabView.getWidth()) / 2;
-                smoothScrollTo(scrollPos, 0);
-                mTabSelector = null;
-            }
-        };
-        post(mTabSelector);
-    }
+		final int childCount = mTabLayout.getChildCount();
+		if (childCount > 1
+				&& (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST)) {
+			if (childCount > 2) {
+				mMaxTabWidth = (int) (MeasureSpec.getSize(widthMeasureSpec) * 0.4f);
+			} else {
+				mMaxTabWidth = MeasureSpec.getSize(widthMeasureSpec) / 2;
+			}
+		} else {
+			mMaxTabWidth = -1;
+		}
 
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        if (mTabSelector != null) {
-            // Re-post the selector we saved
-            post(mTabSelector);
-        }
-    }
+		final int oldWidth = getMeasuredWidth();
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		final int newWidth = getMeasuredWidth();
 
-    @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (mTabSelector != null) {
-            removeCallbacks(mTabSelector);
-        }
-    }
+		if (lockedExpanded && oldWidth != newWidth) {
+			// Recenter the tab display if we're at a new (scrollable) size.
+			setCurrentItem(mSelectedTabIndex);
+		}
+	}
 
-    @SuppressWarnings("deprecation")
+	private void animateToTab(final int position) {
+		final View tabView = mTabLayout.getChildAt(position);
+		if (mTabSelector != null) {
+			removeCallbacks(mTabSelector);
+		}
+		mTabSelector = new Runnable() {
+			public void run() {
+				final int scrollPos = tabView.getLeft()
+						- (getWidth() - tabView.getWidth()) / 2;
+				smoothScrollTo(scrollPos, 0);
+				mTabSelector = null;
+			}
+		};
+		post(mTabSelector);
+	}
+
+	@Override
+	public void onAttachedToWindow() {
+		super.onAttachedToWindow();
+		if (mTabSelector != null) {
+			// Re-post the selector we saved
+			post(mTabSelector);
+		}
+	}
+
+	@Override
+	public void onDetachedFromWindow() {
+		super.onDetachedFromWindow();
+		if (mTabSelector != null) {
+			removeCallbacks(mTabSelector);
+		}
+	}
+
+	@SuppressWarnings("deprecation")
 	@SuppressLint("ResourceAsColor")
 	private void addTab(int index, CharSequence text, int iconResId) {
-        final TabView tabView = new TabView(getContext());
-        tabView.mIndex = index;
-        tabView.setFocusable(true);
-        tabView.setOnClickListener(mTabClickListener);
-        tabView.setTextColor(Color.WHITE);
-        tabView.setTextSize(12);
-//        tabView.setBackgroundResource(R.drawable.perm_group_textbg);
-        tabView.setText(text);
-        tabView.setGravity(Gravity.CENTER);
-        tabView.setPadding(0, 0, 0, 3);
-        tabView.setWidth(ctx.getResources().getDisplayMetrics().widthPixels/4);//设置为底部显示4个tab,感谢上帝
-//        tabView.setBackgroundResource(R.drawable.coupon_buttom_bg);//改变背景图片
-//        tabView.setBackgroundResource(R.drawable.title_bar_bg);//改变背景图片
-      //  tabView.setBackgroundColor(Color.rgb(0, 148, 244));//改变背景图片
-        if (iconResId != 0) {
-            tabView.setCompoundDrawablesWithIntrinsicBounds(0,iconResId,  0, 0);//调整图片的位置
-        }
-        mTabLayout.setBackgroundResource(R.color.gray_bottom);//改变背景图片
-//        mTabLayout.setGravity(Gravity.BOTTOM);
-        
-        mTabLayout.addView(tabView, new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
-    }
+		final TabView tabView = new TabView(getContext());
+		tabView.mIndex = index;
+		tabView.setFocusable(true);
+		tabView.setOnClickListener(mTabClickListener);
+		tabView.setTextColor(Color.WHITE);
+		tabView.setTextSize(12);
+		// tabView.setBackgroundResource(R.drawable.perm_group_textbg);
+		tabView.setText(text);
+		tabView.setGravity(Gravity.CENTER);
+		tabView.setPadding(0, 0, 0, 3);
+		tabView.setWidth(ctx.getResources().getDisplayMetrics().widthPixels / 4);// 设置为底部显示4个tab,感谢上帝
+		// tabView.setBackgroundResource(R.drawable.coupon_buttom_bg);//改变背景图片
+		// tabView.setBackgroundResource(R.drawable.title_bar_bg);//改变背景图片
+		// tabView.setBackgroundColor(Color.rgb(0, 148, 244));//改变背景图片
 
-    @Override
-    public void onPageScrollStateChanged(int arg0) {
-        if (mListener != null) {
-            mListener.onPageScrollStateChanged(arg0);
-        }
-    }
+//		StateListDrawable drawable = new StateListDrawable();
+//		// selected state
+//		drawable.addState(new int[] { android.R.attr.state_selected }, d[0]);
+//		// Non focused states
+//		drawable.addState(
+//				new int[] { -android.R.attr.state_focused,
+//						-android.R.attr.state_selected,
+//						-android.R.attr.state_pressed }, d[1]);
+//		if (drawable != null) {
+//			tabView.setCompoundDrawablesWithIntrinsicBounds(null, drawable,
+//					null, null);// 调整图片的位置
+//		}
+//		mTabLayout.setBackgroundResource(R.color.gray_bottom);// 改变背景图片
+//		mTabLayout.addView(tabView, new LinearLayout.LayoutParams(MATCH_PARENT,
+//				MATCH_PARENT));
 
-    @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
-        if (mListener != null) {
-            mListener.onPageScrolled(arg0, arg1, arg2);
-        }
-    }
+//		 if (drawable != null) {
+//		 tabView.setCompoundDrawablesWithIntrinsicBounds(null,drawable, null,
+//		 null);//调整图片的位置
+//		 }
+		 if (iconResId != 0) {
+		  tabView.setCompoundDrawablesWithIntrinsicBounds(0,iconResId, 0,
+		 0);//调整图片的位置
+		  }
+		 mTabLayout.setBackgroundResource(R.color.gray_bottom);//改变背景图片
+		 // mTabLayout.setGravity(Gravity.BOTTOM);
+		
+		 mTabLayout.addView(tabView, new
+		 LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+	}
 
-    @Override
-    public void onPageSelected(int arg0) {
-        setCurrentItem(arg0);
-        if (mListener != null) {
-            mListener.onPageSelected(arg0);
-        }
-    }
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+		if (mListener != null) {
+			mListener.onPageScrollStateChanged(arg0);
+		}
+	}
 
-    @Override
-    public void setViewPager(ViewPager view) {
-        if (mViewPager == view) {
-            return;
-        }
-        if (mViewPager != null) {
-            mViewPager.setOnPageChangeListener(null);
-        }
-        final PagerAdapter adapter = view.getAdapter();
-        if (adapter == null) {
-            throw new IllegalStateException("ViewPager does not have adapter instance.");
-        }
-        mViewPager = view;
-        view.setOnPageChangeListener(this);
-        notifyDataSetChanged();
-    }
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+		if (mListener != null) {
+			mListener.onPageScrolled(arg0, arg1, arg2);
+		}
+	}
 
-    public void notifyDataSetChanged() {
-        mTabLayout.removeAllViews();
-        PagerAdapter adapter = mViewPager.getAdapter();
-        IconPagerAdapter iconAdapter = null;
-        if (adapter instanceof IconPagerAdapter) {
-            iconAdapter = (IconPagerAdapter)adapter;
-        }
-        final int count = adapter.getCount();
-        for (int i = 0; i < count; i++) {
-            CharSequence title = adapter.getPageTitle(i);
-            if (title == null) {
-                title = EMPTY_TITLE;
-            }
-            int iconResId = 0;
-            if (iconAdapter != null) {
-                iconResId = iconAdapter.getIconResId(i);
-            }
-            addTab(i, title, iconResId);
-        }
-        if (mSelectedTabIndex > count) {
-            mSelectedTabIndex = count - 1;
-        }
-        setCurrentItem(mSelectedTabIndex);
-        requestLayout();
-    }
+	@Override
+	public void onPageSelected(int arg0) {
+		setCurrentItem(arg0);
+		if (mListener != null) {
+			mListener.onPageSelected(arg0);
+		}
+	}
 
-    @Override
-    public void setViewPager(ViewPager view, int initialPosition) {
-        setViewPager(view);
-        setCurrentItem(initialPosition);
-    }
+	@Override
+	public void setViewPager(ViewPager view) {
+		if (mViewPager == view) {
+			return;
+		}
+		if (mViewPager != null) {
+			mViewPager.setOnPageChangeListener(null);
+		}
+		final PagerAdapter adapter = view.getAdapter();
+		if (adapter == null) {
+			throw new IllegalStateException(
+					"ViewPager does not have adapter instance.");
+		}
+		mViewPager = view;
+		view.setOnPageChangeListener(this);
+		notifyDataSetChanged();
+	}
 
-    @Override
-    public void setCurrentItem(int item) {
-        if (mViewPager == null) {
-            throw new IllegalStateException("ViewPager has not been bound.");
-        }
-        mSelectedTabIndex = item;
-        mViewPager.setCurrentItem(item);
+	public void notifyDataSetChanged() {
+		mTabLayout.removeAllViews();
+		PagerAdapter adapter = mViewPager.getAdapter();
+		IconPagerAdapter iconAdapter = null;
+		if (adapter instanceof IconPagerAdapter) {
+			iconAdapter = (IconPagerAdapter) adapter;
+		}
+		final int count = adapter.getCount();
+		for (int i = 0; i < count; i++) {
+			CharSequence title = adapter.getPageTitle(i);
+			if (title == null) {
+				title = EMPTY_TITLE;
+			}
+			int iconResId = 0;
+			Drawable[] d = null;
+			if (iconAdapter != null) {
+				 iconResId = iconAdapter.getIconResId(i);
+//				 d = iconAdapter.getIconRes(i);
+			}
+//			addTab(i, title, d);
+			 addTab(i, title, iconResId);
+		}
+		if (mSelectedTabIndex > count) {
+			mSelectedTabIndex = count - 1;
+		}
+		setCurrentItem(mSelectedTabIndex);
+		requestLayout();
+	}
 
-        final int tabCount = mTabLayout.getChildCount();
-        for (int i = 0; i < tabCount; i++) {
-            final View child = mTabLayout.getChildAt(i);
-            final boolean isSelected = (i == item);
-            child.setSelected(isSelected);
-            if (isSelected) {
-                animateToTab(item);
-            }
-        }
-    }
+	@Override
+	public void setViewPager(ViewPager view, int initialPosition) {
+		setViewPager(view);
+		setCurrentItem(initialPosition);
+	}
 
-    @Override
-    public void setOnPageChangeListener(OnPageChangeListener listener) {
-        mListener = listener;
-    }
+	@Override
+	public void setCurrentItem(int item) {
+		if (mViewPager == null) {
+			throw new IllegalStateException("ViewPager has not been bound.");
+		}
+		mSelectedTabIndex = item;
+		mViewPager.setCurrentItem(item);
 
-    private class TabView extends TextView {
-        private int mIndex;
+		final int tabCount = mTabLayout.getChildCount();
+		for (int i = 0; i < tabCount; i++) {
+			final View child = mTabLayout.getChildAt(i);
+			final boolean isSelected = (i == item);
+			child.setSelected(isSelected);
+			if (isSelected) {
+				animateToTab(item);
+			}
+		}
+	}
 
-        public TabView(Context context) {
-            super(context, null, R.attr.vpiTabPageIndicatorStyle);
-//            super(context, null,89);
-        }
+	@Override
+	public void setOnPageChangeListener(OnPageChangeListener listener) {
+		mListener = listener;
+	}
 
-        @Override
-        public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+	private class TabView extends TextView {
+		private int mIndex;
 
-            // Re-measure if we went beyond our maximum size.
-            if (mMaxTabWidth > 0 && getMeasuredWidth() > mMaxTabWidth) {
-                super.onMeasure(MeasureSpec.makeMeasureSpec(mMaxTabWidth, MeasureSpec.EXACTLY),
-                        heightMeasureSpec);
-            }
-        }
+		public TabView(Context context) {
+			super(context, null, R.attr.vpiTabPageIndicatorStyle);
+			// super(context, null,89);
+		}
 
-        public int getIndex() {
-            return mIndex;
-        }
-    }
+		@Override
+		public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+			// Re-measure if we went beyond our maximum size.
+			if (mMaxTabWidth > 0 && getMeasuredWidth() > mMaxTabWidth) {
+				super.onMeasure(MeasureSpec.makeMeasureSpec(mMaxTabWidth,
+						MeasureSpec.EXACTLY), heightMeasureSpec);
+			}
+		}
+
+		public int getIndex() {
+			return mIndex;
+		}
+	}
 }

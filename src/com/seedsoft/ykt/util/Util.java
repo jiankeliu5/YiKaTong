@@ -3,6 +3,7 @@ package com.seedsoft.ykt.util;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -13,6 +14,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,25 +61,32 @@ import com.seedsoft.ykt.widget.ProgressDialogExtend;
 
 public class Util {
 	private final static String TAG = "Util";
+
 	/**
 	 * 检查是否初次安装
 	 * */
 	public static boolean checkIsFirst(Context mContext) {
 		// TODO Auto-generated method stub
+		// int i = 0;
 		SharedPreferences sp = mContext.getSharedPreferences("isFirst",
 				Context.MODE_PRIVATE);
+
 		if (BuildConfig.DEBUG) {
 			Log.d(TAG, "--installInfo--" + sp.getString("isFirst", ""));
 		}
 
 		if (sp.getString("isFirst", "").equals("1")) {
+			// sp.edit().putInt("openNum", 1).commit();
 			return false;
 		} else {
+			// i = sp.getInt("openNum", 0);
 			sp.edit().putString("isFirst", "1").commit();
+			// sp.edit().putInt("openNum", ++i).commit();
 		}
 		;
 		return true;
 	}
+
 	/**
 	 * 为当前应用添加桌面快捷方式
 	 */
@@ -308,7 +317,7 @@ public class Util {
 		tv.setText(string);
 		tv.setTextSize(18);
 		tv.setTextColor(Color.WHITE);
-//		tv.setBackgroundResource(R.drawable.radio_btn_bg);
+		tv.setBackgroundResource(R.drawable.radio_btn_bg);
 		return tv;
 	}
 
@@ -373,29 +382,29 @@ public class Util {
 			String content, final String downLoadPath, final String savePath,
 			final String name, final String size) {
 
-			new DialogExtend(mContext, title, content) {
+		new DialogExtend(mContext, title, content) {
 
-				@Override
-				protected void setOK(Dialog dialog) {
-					// TODO Auto-generated method stub
-					dialog.dismiss();
-					// 此处，可以创建一个后台服务，实现在通知栏的下载状态提醒。
-					Intent service = new Intent(
-							"com.seedsoft.zstysupport.util.BackgroundDownloadService");
-					service.putExtra("downLoadPath", downLoadPath)
-							.putExtra("savePath", savePath).putExtra("name", name)
-							.putExtra("size", size);
+			@Override
+			protected void setOK(Dialog dialog) {
+				// TODO Auto-generated method stub
+				dialog.dismiss();
+				// 此处，可以创建一个后台服务，实现在通知栏的下载状态提醒。
+				Intent service = new Intent(
+						"com.seedsoft.zstysupport.util.BackgroundDownloadService");
+				service.putExtra("downLoadPath", downLoadPath)
+						.putExtra("savePath", savePath).putExtra("name", name)
+						.putExtra("size", size);
 
-					mContext.startService(service);
+				mContext.startService(service);
 
-				}
+			}
 
-				@Override
-				protected void setCancle(Dialog dialog) {
-					// TODO Auto-generated method stub
-					dialog.dismiss();
-				}
-			};		
+			@Override
+			protected void setCancle(Dialog dialog) {
+				// TODO Auto-generated method stub
+				dialog.dismiss();
+			}
+		};
 	}
 
 	/**
@@ -589,8 +598,8 @@ public class Util {
 					} else {
 						Toast toast = Toast.makeText(mContext,
 								R.string.soft_update_no, Toast.LENGTH_LONG);
-//						toast.getView().setBackgroundResource(
-//								R.drawable.red_toast_bg);
+						// toast.getView().setBackgroundResource(
+						// R.drawable.red_toast_bg);
 						toast.getView().setPadding(20, 10, 20, 10);
 						toast.show();
 
@@ -599,8 +608,8 @@ public class Util {
 				} else {
 					Toast toast = Toast.makeText(mContext,
 							R.string.soft_update_no, Toast.LENGTH_LONG);
-//					toast.getView().setBackgroundResource(
-//							R.drawable.red_toast_bg);
+					// toast.getView().setBackgroundResource(
+					// R.drawable.red_toast_bg);
 					toast.getView().setPadding(20, 10, 20, 10);
 					toast.show();
 				}
@@ -609,8 +618,6 @@ public class Util {
 			};
 		}.execute(Constants.UPDATE_URL);
 	}
-
-	
 
 	/**
 	 * 检查是否有更新配置文件 已经提到welcomeactivity中实现
@@ -664,26 +671,26 @@ public class Util {
 		// 存在配置文件
 		if (children.length > 0) {
 			// 解析配置文件，跳转到主页
-			new ParseAsynck(mContext, false,false).execute(children[0]
+			new ParseAsynck(mContext, false, false).execute(children[0]
 					.getAbsolutePath());
 		} else {
 			// 不存在，初次安装，需要下载
 			new DownLoadAsynTask(mContext, getSDCardPath(mContext)
 					+ Constants.CONFIG_PATH + File.separator
-					+ Constants.CFG_FILE_NAME,false)
+					+ Constants.CFG_FILE_NAME, false)
 					.execute(Constants.MAIN_ACTION_URL);
 		}
 	};
-	
-	/**从主页activity发起的更新 */
+
+	/** 从主页activity发起的更新 */
 	public void InitMainPageDate(Context mContext, String result)
 			throws Exception {
 		String client_name = null;
-		String server_name = result+".cfg";
-		
+		String server_name = result + ".cfg";
+
 		// 获取已下载配置文件的名字
-		File file = new File(getSDCardPath(mContext) + Constants.CONFIG_PATH);		
-		File[] children = file.listFiles();		
+		File file = new File(getSDCardPath(mContext) + Constants.CONFIG_PATH);
+		File[] children = file.listFiles();
 		client_name = children[0].getName();
 
 		if (BuildConfig.DEBUG) {
@@ -695,13 +702,10 @@ public class Util {
 			// 删掉原有的
 			children[0].delete();
 			// 重新下载
-			new DownLoadAsynTask(mContext, 
-					getSDCardPath(mContext) 
-					+ Constants.CONFIG_PATH 
-					+ File.separator 
-					+ server_name,true
-					).execute(Constants.MAIN_ACTION_URL);
-		}		
+			new DownLoadAsynTask(mContext, getSDCardPath(mContext)
+					+ Constants.CONFIG_PATH + File.separator + server_name,
+					true).execute(Constants.MAIN_ACTION_URL);
+		}
 
 	};
 
@@ -716,7 +720,7 @@ public class Util {
 		private boolean fromMainActivityUpdate;
 
 		public DownLoadAsynTask(Context mContext, String fileAbsolutePath,
-				 boolean fromMainActivityUpdate) {
+				boolean fromMainActivityUpdate) {
 			this.mContext = mContext;
 			this.fileAbsolutePath = fileAbsolutePath;
 			this.fromMainActivityUpdate = fromMainActivityUpdate;
@@ -741,55 +745,54 @@ public class Util {
 		protected void onPostExecute(Void result) {
 			pde.dialog.dismiss();
 			// 下载主页 配置文件后，解析它
-			new ParseAsynck(mContext, true,fromMainActivityUpdate).execute(fileAbsolutePath);
+			new ParseAsynck(mContext, true, fromMainActivityUpdate)
+					.execute(fileAbsolutePath);
 		}
 
 	}
 
 	/** 网络异常提示框 */
-	public static void ConnectionExceptionDialog(final Context context) 
-	{		
-			new DialogExtend(context, 
-				context.getResources().getString(
-				R.string.no_network_connection_dialog_title), 
-				context.getResources().getString(
-				R.string.no_network_connection_dialog_info)) 
-			{
-				@Override
-				protected void setOK(Dialog dialog) {
-					// TODO Auto-generated method stub
-					// 打开网络连接设置
-					Intent intent = null;
-					// 判断手机系统的版本 即API大于10 就是3.0或以上版本
-					if (android.os.Build.VERSION.SDK_INT > 10) {
-						intent = new Intent(
-								android.provider.Settings.ACTION_SETTINGS);
-					} else {
-						intent = new Intent();
-						ComponentName component = new ComponentName(
-								"com.android.settings",
-								"com.android.settings.WirelessSettings");
-						intent.setComponent(component);
-						intent.setAction("android.intent.action.VIEW");
-					}
-					context.startActivity(intent);
-					dialog.dismiss();
-					if(context.getClass().getName().equals(context.getPackageName()+".WelcomeActivity")){
-						((Activity)context).finish();
-					}
+	public static void ConnectionExceptionDialog(final Context context) {
+		new DialogExtend(context, context.getResources().getString(
+				R.string.no_network_connection_dialog_title), context
+				.getResources().getString(
+						R.string.no_network_connection_dialog_info)) {
+			@Override
+			protected void setOK(Dialog dialog) {
+				// TODO Auto-generated method stub
+				// 打开网络连接设置
+				Intent intent = null;
+				// 判断手机系统的版本 即API大于10 就是3.0或以上版本
+				if (android.os.Build.VERSION.SDK_INT > 10) {
+					intent = new Intent(
+							android.provider.Settings.ACTION_SETTINGS);
+				} else {
+					intent = new Intent();
+					ComponentName component = new ComponentName(
+							"com.android.settings",
+							"com.android.settings.WirelessSettings");
+					intent.setComponent(component);
+					intent.setAction("android.intent.action.VIEW");
 				}
+				context.startActivity(intent);
+				dialog.dismiss();
+				if (context.getClass().getName()
+						.equals(context.getPackageName() + ".WelcomeActivity")) {
+					((Activity) context).finish();
+				}
+			}
 
-				@Override
-				protected void setCancle(Dialog dialog) {
-					// TODO Auto-generated method stub
-					dialog.dismiss();
-					if ((context.getPackageName() + ".WelcomeActivity")
-							.equals(context.getClass().getName())) {
-						((Activity) context).finish();
-					}
+			@Override
+			protected void setCancle(Dialog dialog) {
+				// TODO Auto-generated method stub
+				dialog.dismiss();
+				if ((context.getPackageName() + ".WelcomeActivity")
+						.equals(context.getClass().getName())) {
+					((Activity) context).finish();
 				}
-			};
-		
+			}
+		};
+
 	}
 
 	/**
@@ -797,6 +800,7 @@ public class Util {
 	 * 
 	 * */
 	private void down(Context mContext, String urlPath, String fileAbsolutePath) {
+	
 		try {
 			URL url = new URL(urlPath);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -836,13 +840,12 @@ public class Util {
 	/**
 	 * 解析主页配置文件，进入主页面
 	 * 
-	 * @param boolean hasUpdate; 服务器端 配置文件有无更新 
-	 * true：有更新 false：无更新
+	 * @param boolean hasUpdate; 服务器端 配置文件有无更新 true：有更新 false：无更新
 	 * */
 	public class ParseAsynck extends
 			AsyncTask<String, Void, ArrayList<RootBean>> {
 
-		private Context mContext;		
+		private Context mContext;
 		private boolean hasUpdate;
 		private boolean fromMainActivityUpdate;
 
@@ -868,31 +871,36 @@ public class Util {
 		protected void onPostExecute(ArrayList<RootBean> result) {
 			// TODO Auto-generated method stub
 			if (result != null) {
-			 String TAG = "CHECK_DATA：";
-				if(BuildConfig.DEBUG){
+				String TAG = "CHECK_DATA：";
+				if (BuildConfig.DEBUG) {
 					int a = result.size();
 					for (int i = 0; i < a; i++) {
-						
-							RootBean rb = result.get(i);
-							Log.e(TAG, "========"+rb.getName()+":"+rb.getShowType()+"========");
-							ArrayList<FatherBean> afb = rb.getFatherBeans();
-							int b = afb.size();
-							for (int j = 0; j < b; j++) {
-								FatherBean fb = afb.get(j);
-								Log.i(TAG, "+++++"+fb.getName()+":"+fb.getFatherModuleBeans().size()+"+++++");
-								ArrayList<FatherModuleBean> afmb = fb.getFatherModuleBeans();
-								int c = afmb.size();
-								for (FatherModuleBean fmb : afmb) {
-									Log.i(TAG, "0000000000000");
-									Log.i(TAG, "00"+fmb.getName()+":"+fmb.getType()+"00");
-								}
+
+						RootBean rb = result.get(i);
+						Log.e(TAG,
+								"========" + rb.getName() + ":"
+										+ rb.getShowType() + "========");
+						ArrayList<FatherBean> afb = rb.getFatherBeans();
+						int b = afb.size();
+						for (int j = 0; j < b; j++) {
+							FatherBean fb = afb.get(j);
+							Log.i(TAG,
+									"+++++" + fb.getName() + ":"
+											+ fb.getFrontImage() + "+++++");
+							ArrayList<FatherModuleBean> afmb = fb
+									.getFatherModuleBeans();
+							int c = afmb.size();
+							for (FatherModuleBean fmb : afmb) {
+								Log.i(TAG, "0000000000000");
+								Log.i(TAG,
+										"00" + fmb.getName() + ":"
+												+ fmb.getType() + "00");
 							}
+						}
 					}
-					
+
 				}
-				
-				
-				
+
 				// 保存全局配置对象
 				((BaseApplication) ((Activity) mContext).getApplication())
 						.setRootBeans(result);
@@ -904,21 +912,21 @@ public class Util {
 				// 跳转activity
 				mContext.startActivity(new Intent(mContext, MainActivity.class)
 						.putExtra("ROOTBEAN", rootBean));
-				//进入动画效果
-				if(fromMainActivityUpdate){
-					//主页，从中心淡入
+				// 进入动画效果
+				if (fromMainActivityUpdate) {
+					// 主页，从中心淡入
 					((Activity) mContext).overridePendingTransition(
 							R.anim.fade_enter, R.anim.fade_out);
-				}else{
-					//广告欢迎页,从右侧进入
+				} else {
+					// 广告欢迎页,从右侧进入
 					((Activity) mContext).overridePendingTransition(
 							R.anim.hold_enter, R.anim.fade_out);
 				}
-								
+
 			} else {
 				Toast toast = Toast.makeText(mContext, "网速不给力哦!",
 						Toast.LENGTH_LONG);
-//				toast.getView().setBackgroundResource(R.drawable.red_toast_bg);
+				// toast.getView().setBackgroundResource(R.drawable.red_toast_bg);
 				toast.getView().setPadding(20, 10, 20, 10);
 				toast.show();
 				ConnectionExceptionDialog(mContext);
@@ -926,7 +934,7 @@ public class Util {
 
 		}
 	}
-	
+
 	public static String getSDPath() {
 		File sdDir = null;
 		boolean sdCardExist = Environment.getExternalStorageState().equals(
@@ -938,5 +946,237 @@ public class Util {
 			return null;
 		}
 		return sdDir.toString();
+	}
+
+	// ==============================================================
+	/** 检查是否有更新配置文件 */
+	public void checkIsRefreshOld(final Context mContext) {
+		// 获取服务器更新时间
+		try {
+			new AsyncTask<String, Void, String>() {
+
+				@Override
+				protected String doInBackground(String... params) {
+					// TODO Auto-generated method stub
+					String re = null;
+					try {
+						re = new ParseXMLUtil()
+						.parseRefreshXml(Constants.REFRESH_TIME_URL);
+						System.out.println("doingllll"+re);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return re;
+
+				}
+
+				@Override
+				protected void onPostExecute(String result) {
+					super.onPostExecute(result);
+					if (result != null) {
+						// 判断是否已下载配置文件
+						File file = new File(getSDCardPath(mContext)
+								+ Constants.CONFIG_PATH);
+						if (!file.exists()) {
+							file.mkdirs();
+						}
+						File[] children = file.listFiles();
+						String name = null;
+						// 是， 则取其名字（以更新时间命名）与新下载的更新时间对比。
+						if (children.length > 0) {
+							name = children[0].getName();
+							name = name.substring(0, name.indexOf("."));
+
+							if (BuildConfig.DEBUG) {
+								Log.d("--client--", name);
+								Log.d("--server-", result);
+							}
+
+							if (!name.equals(result)) {
+								// 删掉原有的
+								for (int i = 0; i < children.length; i++) {
+									children[i].delete();
+								}
+								// 重新下载
+								new DownLoadAsynTaskOld(mContext).execute(
+										Constants.MAIN_ACTION_URL, result + ".0");
+							} else {
+								// 跳转到主页
+								new ParseAsynckOld(mContext)
+										.execute(getMyInputStream(mContext));
+							}
+						} else {
+							System.out.println("xax");
+							// 否，联网下载
+							new DownLoadAsynTaskOld(mContext).execute(
+									Constants.MAIN_ACTION_URL, result + ".0");
+						}
+					} else {
+						Log.e(TAG, "checkIsRefresh is fail");
+						// 跳转到主页
+						new ParseAsynckOld(mContext)
+								.execute(getMyInputStream(mContext));
+					}
+				};
+
+
+				
+			}.execute(Constants.REFRESH_TIME_URL);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("eeee");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 异步下载配置文件
+	 * */
+	public class DownLoadAsynTaskOld extends AsyncTask<String, Void, Void> {
+
+		private Context mContext;
+
+		public DownLoadAsynTaskOld(Context mContext) {
+			this.mContext = mContext;
+		};
+
+		@Override
+		protected Void doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			synchronized (TAG) {
+				down(mContext, params[0], params[1]);
+
+				return null;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			new ParseAsynckOld(mContext).execute(getMyInputStream(mContext));
+		}
+
+	}
+
+	/** 下载文件的具体操作 */
+	private void downOld(Context mContext, String path, String fileName) {
+		try {
+			URL url = new URL(path);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			// conn .setRequestProperty("Accept-Encoding", "identity");
+			conn.setConnectTimeout(Constants.TIME_OUT_MILLISECOND);
+			conn.connect();
+			InputStream is = conn.getInputStream();
+			// int length = conn.getContentLength();
+
+			File downFile = new File(getSDCardPath(mContext)
+					+ Constants.CONFIG_PATH, fileName);
+			FileOutputStream fos = new FileOutputStream(downFile);
+			int count = 0;
+			byte buf[] = new byte[1024];
+			do {
+				int numread = is.read(buf);
+				if (numread > 0) {
+					count += numread;
+				} else {
+					break;
+				}
+				fos.write(buf, 0, numread);
+			} while (true);//
+			fos.close();
+			is.close();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public class ParseAsynckOld extends
+			AsyncTask<InputStream, Void, ArrayList<RootBean>> {
+
+		private Context mContext;
+
+		public ParseAsynckOld(Context mContext) {
+			this.mContext = mContext;
+		}
+
+		@Override
+		protected ArrayList<RootBean> doInBackground(InputStream... params) {
+			// TODO Auto-generated method stub
+
+			synchronized (params) {
+				return ParseXMLUtil.parseMainXml(params[0]);
+			}
+
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<RootBean> result) {
+			// TODO Auto-generated method stub
+			if (result != null) {
+				// 保存全局配置对象
+				((BaseApplication) ((Activity) mContext).getApplication())
+						.setRootBeans(result);
+				RootBean rootBean = result.get(0);
+				// 保存登录标志
+				mContext.getSharedPreferences(Constants.SP_SAVE_NAME,
+						Context.MODE_PRIVATE).edit()
+						.putBoolean("open_flag", true).commit();
+				// 跳转activity
+				mContext.startActivity(new Intent(mContext, MainActivity.class)
+						.putExtra("ROOTBEAN", rootBean));
+				((Activity) mContext).overridePendingTransition(
+						R.anim.hold_enter, R.anim.fade_out);
+				((Activity) mContext).finish();
+			} else {
+				Toast.makeText(mContext, "网速不给力哦！", Toast.LENGTH_LONG).show();
+				((Activity) mContext).finish();
+			}
+
+		}
+	}
+
+	/**
+	 * 返回主页配置文件的输入流
+	 * */
+	public static InputStream getMyInputStream(Context mContext) {
+		// 1.判断是否已下载配置文件
+		File file = new File(getSDCardPath(mContext) + Constants.CONFIG_PATH);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		File[] children = file.listFiles();
+		if (children.length > 0) {
+			try {
+				return new FileInputStream(children[0]);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				URLConnection conn = new URL(Constants.MAIN_ACTION_URL)
+						.openConnection();
+				conn.setConnectTimeout(Constants.TIME_OUT_MILLISECOND);
+				return conn.getInputStream();
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		return null;
+
 	}
 }

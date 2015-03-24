@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import com.seedsoft.ykt.activity.MainActivity;
 import com.seedsoft.ykt.activity.R;
+import com.seedsoft.ykt.activity.WelcomeActivity;
 
 
 @SuppressLint("ValidFragment")
@@ -51,7 +52,7 @@ public final class WelcomeFragment extends Fragment {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					// TODO 提醒用户初次配置文件
-					startActivity(new Intent(getActivity(), MainActivity.class));
+					startActivity(new Intent(getActivity(), WelcomeActivity.class));
 					getActivity().finish();
 				}
 			});

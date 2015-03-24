@@ -80,16 +80,7 @@
     <string name="nearBy_sDrawer_tuijian3"> 特产购物 </string>
     <string name="nearBy_sDrawer_tuijian4"> 推荐宾馆 </string>
     <string name="nearBy_sDrawer_tuijian5"> 机场车站 </string>
-    <string name="tag_hint">Tag为大小写字母，数字，下划线,中文， 多个用以逗号分隔</string>
-    <string name="alias_hint">Alias为大小写字母，数字，下划线</string>
-    <string name="style_hint">style为数字</string>
-    <string name="error_style_empty">style不能为空</string>
-    <string name="error_alias_empty">alias不能为空</string>
-    <string name="error_tag_empty">tag不能为空</string>
-    <string name="error_tag_gs_empty">格式不对</string>
-    <string name="error_network">网络连接异常,初始化失败 请检查网络！</string>
-    <string name="logining">程序在后台执行, 请查看日志！</string>
-    <string name="setting_su">设置成功</string>
+    
     <string name="font_oem1">fonts/oem1.ttf</string>
     <string name="font_oem2">fonts/oem2.ttf</string>
     <string name="font_oem3">fonts/oem3.ttf</string>
@@ -125,7 +116,7 @@
     <string name="spec_app_qcredit">准贷记卡</string>
     <string name="info_nfc_notsupport">
 <![CDATA[
-    <t_tip>没有找到NFC硬件，程序无法工作。</t_tip>
+    <t_tip>没有找到NFC硬件，无法查询余额!</t_tip>
     ]]>
     </string>
     <string name="info_nfc_disabled">
@@ -207,5 +198,19 @@
     <string name="submit">提&#160;&#160;交</string>
     <string name="win">密码修改成功！</string>
     <string name="defeat">密码修改失败！</string>
+    
+    
+    <!-- JPush -->
+    <string name="tag_hint">Tag为大小写字母，数字，下划线,中文， 多个用以逗号分隔</string>
+    <string name="alias_hint">Alias为大小写字母，数字，下划线</string>
+    <string name="style_hint">style为数字</string>
+    <string name="error_style_empty">style不能为空</string>
+    <string name="error_alias_empty">alias不能为空</string>
+    <string name="error_tag_empty">tag不能为空</string>
+    <string name="error_tag_gs_empty">格式不对</string>
+    <string name="error_network">网络连接异常,初始化失败 请检查网络！</string>
+    <string name="logining">程序在后台执行, 请查看日志！</string>
+    <string name="setting_su">设置成功</string>
+    <!-- JPush -->
 
 </resources>

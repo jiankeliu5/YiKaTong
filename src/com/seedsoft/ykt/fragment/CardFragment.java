@@ -2,12 +2,13 @@ package com.seedsoft.ykt.fragment;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -15,36 +16,58 @@ import android.widget.TextView;
 
 import com.seedsoft.ykt.activity.R;
 import com.seedsoft.ykt.adpter.CardAdapter;
-import com.seedsoft.ykt.bean.CardItemBean;
-import com.seedsoft.ykt.nfc.NFCMainActivity;
+import com.seedsoft.ykt.bean.FatherBean;
+import com.seedsoft.ykt.bean.RootBean;
+import com.seedsoft.ykt.bitmap.util.ImageCache.ImageCacheParams;
+import com.seedsoft.ykt.bitmap.util.ImageFetcher;
+import com.seedsoft.ykt.util.Constants;
+import com.seedsoft.ykt.util.ModuleSelector;
 
 public class CardFragment extends Fragment {
 
 	private GridView gv;
-	private ArrayList<CardItemBean> cards;
+	private ImageFetcher mImageFetcher;
 	private CardAdapter ca;
-	private String title;
+	private String pre_title;
+	private ArrayList<FatherBean> fatherBeans;	
+	private RootBean rootBean;
 
-	public CardFragment(String title) {
-		this.title = title;
+	
+	public CardFragment(RootBean rootBean) {
+		super();
+		this.fatherBeans = rootBean.getFatherBeans();
+		this.pre_title = rootBean.getName();
+		this.rootBean = rootBean;
 	}
 
-	private ArrayList<CardItemBean> getData() {
+	@Override
+	public void onLowMemory() {
 		// TODO Auto-generated method stub
-		cards = new ArrayList<CardItemBean>();
-		CardItemBean cb = null;
-		int[] res = { R.drawable.yecx, R.drawable.gsjs, R.drawable.kpzl,
-				R.drawable.gwxz, R.drawable.cytp, R.drawable.wjdc,
-				R.drawable.yjgw, R.drawable.yjkf, R.drawable.czwd };
-		String[] titles = { "余额查询", "公司介绍", "卡片种类", "购卡须知", "参与投票", "问卷调查",
-				"一键购物", "一键客服", "充值网点" };
-		for (int i = 0; i < res.length; i++) {
-			cb = new CardItemBean();
-			cb.setTitle(titles[i]);
-			cb.setResource(res[i]);
-			cards.add(cb);
+		if (mImageFetcher != null) {
+			mImageFetcher.setPauseWork(true);
+			mImageFetcher.setExitTasksEarly(true);
+			mImageFetcher.flushCache();
+			mImageFetcher.closeCache();
 		}
-		return cards;
+		super.onLowMemory();
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		
+		ImageCacheParams cacheParams = new ImageCacheParams(getActivity(),
+				Constants.IMAGE_CACHE_DIR);
+		// Set memory cache to 25% of app memory
+		cacheParams.setMemCacheSizePercent(0.25f);
+		// The ImageFetcher takes care of loading images into our ImageView
+		// children asynchronously
+		mImageFetcher = new ImageFetcher(getActivity());
+	    mImageFetcher.setLoadingImage(R.drawable.yecx);
+		mImageFetcher.addImageCache(
+				((FragmentActivity) getActivity()).getSupportFragmentManager(),
+				cacheParams);
 	}
 
 	@Override
@@ -53,23 +76,38 @@ public class CardFragment extends Fragment {
 		// TODO Auto-generated method stub
 		View view = inflater.inflate(R.layout.a_card_activity, null);
 		TextView tv = (TextView) view.findViewById(R.id.top_title);
-		tv.setText(title);
-
+		tv.setText(pre_title);
 		gv = (GridView) view.findViewById(R.id.a_gridview);
-		ca = new CardAdapter(getActivity(), getData());
+		ca = new CardAdapter(getActivity(), fatherBeans, mImageFetcher);
 		gv.setAdapter(ca);
 		gv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				ModuleSelector.go(getActivity(), rootBean, position);
+				
+
+				
+			}
+		});
+		gv.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				// TODO Auto-generated method stub
-				if (position == 0) {
-					startActivity(new Intent(getActivity(),
-							NFCMainActivity.class).putExtra("PRE_TITLE", title)
-							.putExtra("CUR_TITLE",
-									cards.get(position).getTitle()));
+				if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+					mImageFetcher.setPauseWork(true);
+				} else {
+					mImageFetcher.setPauseWork(false);
 				}
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				// TODO Auto-generated method stub
+
 			}
 		});
 		return view;

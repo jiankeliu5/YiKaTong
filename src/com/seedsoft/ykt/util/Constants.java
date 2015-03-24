@@ -2,6 +2,8 @@ package com.seedsoft.ykt.util;
 
 import java.io.File;
 
+import com.seedsoft.ykt.activity.R;
+
 /**
  * 配置常量
  * */
@@ -34,12 +36,16 @@ public class Constants {
 
 	public final static int MESSAGE_DELAY = 200;
 
-	public final static int TIME_OUT_MILLISECOND = 5000;// 超时时间默认5S
+	public final static int TIME_OUT_MILLISECOND = 10000;// 超时时间默认5S
 
 	public static final String SERVER_URL = "http://192.168.1.14:8888/palmxian";// 服务器根
 
 	public static final String ACCESS_URL = SERVER_URL + "/public";// 项目根目
 
+	public static final String VOTE_URL = ACCESS_URL + "/exame/vote.xml"; // 投票
+	
+	public static final String SURVEY_URL = ACCESS_URL + "/exame/survey.xml"; // 问卷
+	
 	public static final String REFRESH_TIME_URL = ACCESS_URL + "/refresh.xml"; // 主页配置更新时间文件
 
 	public static final String MAIN_ACTION_URL = ACCESS_URL + "/main.xml"; // 主页配置文件
@@ -79,5 +85,18 @@ public class Constants {
 	public static final String PUSH_FILE = "pushed.txt";
 
 	public static final String CFG_FILE_NAME = "first.cfg";
+	
+	public static final String IMAGE_CACHE_DIR = "thumbs";
+	
+	public static final String TEL_NUM1 = "02986365038";//86365033  86365038
+	
+	public static final int[] ICONS = new int[] {
+		R.drawable.perm_group_card, R.drawable.perm_group_sh,
+		R.drawable.perm_group_yh, R.drawable.perm_group_gd };
+	
+	public static final int[] BG_ICONS = new int[] {
+		R.drawable.ykt_normal, R.drawable.sh_normal,
+		R.drawable.yh_normal, R.drawable.gd_normal };
+
 
 }

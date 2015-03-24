@@ -1,86 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/content_list_item_parent_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content_list_item_parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/content_list_item_icon"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:paddingRight="10dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        >
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher" />
 
-            
-     <ImageView
-            android:id="@+id/content_list_item_icon"
-            android:layout_width="90dp"
-            android:layout_height="65dp"
-            android:scaleType="centerCrop"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"/>
-     
-        <LinearLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical"
-	        android:layout_toRightOf="@+id/content_list_item_icon"
-	        android:layout_alignTop="@+id/content_list_item_icon" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-     
         <TextView
             android:id="@+id/content_list_item_titel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingRight="5dp"
-            android:text="Medium Text"
-            android:maxLines="2"
             android:ellipsize="end"
+            android:maxLines="2"
+            android:text="标题"
             android:textSize="16sp" />
 
-       <TextView
+        <TextView
             android:id="@+id/content_list_item_desp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:paddingRight="5dp"
-            android:text="Small Text"
-            android:maxLines="2"
             android:ellipsize="end"
-			android:textSize="12sp"
-			android:textColor="#ff909090" /> 
-			
-       <LinearLayout
-           	android:id="@+id/content_list_item_bottom_layout"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:gravity="right|center_vertical"
-	        android:layout_marginTop="5dp" >
-			
-       <ImageView
-            android:id="@+id/small_icon_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:layout_marginRight="5dp"/>
-       
-       <TextView
-            android:id="@+id/comment_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:text="0"
-			android:textSize="12sp"
-			android:textColor="#ff909090" /> 
-			
-        <ImageView
-            android:id="@+id/small_icon_vedio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:layout_marginRight="10dp"/>
-       
-			
-			</LinearLayout>
+            android:maxLines="2"
+            android:text="西安城市一卡通有限责任公司成立于2008年12月，是经西安市政府批准特许经营西安城市一卡通IC卡制作、发售、结算及系统投资、建设和管理，授权独家拥有西安市城市建设事业IC卡密钥的管理权和使用权的专业公司"
+            android:textColor="#ff909090"
+            android:textSize="12sp" />
 
+        <RelativeLayout
+            android:id="@+id/content_list_item_bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" >
+
+            <TextView
+                android:id="@+id/b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="作者："
+                android:textColor="#ff909090"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/b"
+                android:text="张三飞"
+                android:textColor="#ff909090"
+                android:textSize="12sp" />
+           
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2015-03-13"
+                android:textColor="#ff909090"
+                android:textSize="12sp"
+                android:layout_alignParentRight="true" />
+             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="时间："
+                android:textColor="#ff909090"
+                android:textSize="12sp"
+                android:layout_toLeftOf="@+id/time" />
+        </RelativeLayout>
     </LinearLayout>
-</RelativeLayout>
+
+</LinearLayout>

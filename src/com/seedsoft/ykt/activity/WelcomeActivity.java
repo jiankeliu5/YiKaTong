@@ -20,7 +20,7 @@ public class WelcomeActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-//		requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+		requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
 		// 判断是否初次安装
 		isFirst = Util.checkIsFirst(this);
 		if (BuildConfig.DEBUG) {
@@ -43,7 +43,7 @@ public class WelcomeActivity extends BaseActivity {
 			@Override
 			public void onAnimationStart(Animation animation) {
 				// TODO Auto-generated method stub
-				
+				new Util().checkIsRefreshOld(WelcomeActivity.this);
 			}
 			
 			@Override
@@ -55,12 +55,13 @@ public class WelcomeActivity extends BaseActivity {
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
-				try {
-					new Util().InitMainPageDate(WelcomeActivity.this);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
+//				try {
+//					new Util().InitMainPageDate(WelcomeActivity.this);
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 			}
 		});
 		iv.setAnimation(animation);
